@@ -8,19 +8,35 @@ library(plyr)
 library(reshape2)
 
 ui <- dashboardPage(
-  dashboardHeader(),
-  dashboardSidebar(),
+  dashboardHeader(title = "ERISone stats"),
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem("Aryee lab", tabName = "aryeelab", icon = icon("bar-chart")),
+      menuItem("CID", tabName = "cid", icon = icon("bar-chart"))
+    )
+  ),
   dashboardBody(
-    fluidRow(
-      box(plotOutput("bigDirs", height = 250)),
-      box(plotOutput("history", height = 250))
+    tabItems(
+      tabItem(tabName = "aryeelab",
+        h2("/data/aryee"),      
+        fluidRow(
+          box(title="Biggest directories", plotOutput("bigDirs", height = 250)),
+          box(title="Directory size history", plotOutput("history", height = 250))
+        )
+      ),
+      tabItem(tabName = "cid",
+              fluidRow(
+              )
+      )
     )
   )
 )
 
+
+
 #system("cp /data/aryee/du.txt du_example.txt")
 
-dat <- read.delim("du_example.txt", header=FALSE, stringsAsFactors = FALSE)
+dat <- read.delim("du.txt", header=FALSE, stringsAsFactors = FALSE)
 colnames(dat) <- c("date", "dir", "sizeKB")
 dat$sizeTB <- dat$sizeKB / 1e9
 dat$date <- parse_date(dat$date)
