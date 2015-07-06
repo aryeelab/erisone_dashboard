@@ -18,12 +18,15 @@ ui <- dashboardPage(
   )
 )
 
+#system("cp /data/aryee/du.txt du_example.txt")
+
+dat <- read.delim("du_example.txt", header=FALSE, stringsAsFactors = FALSE)
+colnames(dat) <- c("date", "dir", "sizeKB")
+dat$sizeTB <- dat$sizeKB / 1e9
+dat$date <- parse_date(dat$date)
+
+
 server <- function(input, output) { 
-  
-  dat <- read.delim("/data/aryee/du.txt", header=FALSE, stringsAsFactors = FALSE)
-  colnames(dat) <- c("date", "dir", "sizeKB")
-  dat$sizeTB <- dat$sizeKB / 1e9
-  dat$date <- parse_date(dat$date)
   
   # Current biggest directories
   x <- subset(dat, dat$date==max(dat$date))
