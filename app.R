@@ -11,17 +11,19 @@ ui <- dashboardPage(
   dashboardHeader(title = "ERISone stats"),
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Aryee lab", tabName = "aryeelab", icon = icon("bar-chart")),
-      menuItem("CID", tabName = "cid", icon = icon("bar-chart"))
+      menuItem("Storage", tabName = "storage", icon = icon("bar-chart"))
+      #menuItem("CID", tabName = "cid", icon = icon("bar-chart"))
     )
   ),
   dashboardBody(
     tabItems(
-      tabItem(tabName = "aryeelab",
+      tabItem(tabName = "storage",
         h2("/data/aryee"),      
         fluidRow(
-          box(title="Biggest directories", plotOutput("bigDirs", height = 250)),
-          box(title="Directory size history", plotOutput("history", height = 250))
+          box(title="Biggest directories", plotOutput("bigDirs", width=500, height = 250))
+        ),
+        fluidRow(
+          box(title="Directory size history", plotOutput("history", width=500, height = 250))
         )
       ),
       tabItem(tabName = "cid",
