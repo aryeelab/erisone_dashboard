@@ -20,11 +20,12 @@ ui <- dashboardPage(
       tabItem(tabName = "storage",
         h2("/data/aryee"),      
         fluidRow(
-          box(title="Biggest directories", plotOutput("bigDirs", width=500, height = 250))
-        ),
-        fluidRow(
-          box(title="Directory size history", plotOutput("history", width=500, height = 250))
+          box(title="Biggest directories", plotOutput("bigDirs", width=700, height = 600))
         )
+        #,
+        #fluidRow(
+        #  box(title="Directory size history", plotOutput("history", width=500, height = 250))
+        #)
       ),
       tabItem(tabName = "cid",
               fluidRow(
@@ -54,7 +55,7 @@ server <- function(input, output) {
   baseDir <- x[baseIdx,"dir"]
   x <- x[-baseIdx,]
   x$dir <- sub(paste0(baseDir, "/"), "", x$dir)
-  x <- x[1:20,]
+  x <- x[1:40,]
   #curBiggestDirs <- x$dir
   x$dir <- factor(x$dir, levels=rev(x$dir))
   pBigDirs <- ggplot(x, aes(dir, sizeTB)) + geom_bar(stat="identity") + xlab("") + ylab("Size (TB)") + coord_flip() + theme_bw()
