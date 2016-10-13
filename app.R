@@ -21,10 +21,10 @@ ui <- dashboardPage(
         h2(textOutput("heading")),    
         h3(textOutput("timestamp")),
         fluidRow(
-          box(title="Biggest directories", plotOutput("bigDirs", width=700, height = 600))
+          box(title="Biggest directories", plotOutput("bigDirs", width=600, height = 600))
         ),
         fluidRow(
-          box(title="Directory size history", plotOutput("history", width=500, height = 250))
+          box(title="Directory size history", plotOutput("history", width=600, height = 250))
         )
       ),
       tabItem(tabName = "cid",
