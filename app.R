@@ -41,7 +41,7 @@ ui <- dashboardPage(
 
 dat <- read.delim("du.txt", header=FALSE, stringsAsFactors = FALSE)
 colnames(dat) <- c("date", "dir", "sizeKB")
-dat$sizeTB <- dat$sizeKB / 1e9
+dat$sizeTB <- dat$sizeKB * 1024 / 2^40
 dat$date <- parse_date(dat$date)
 
 
