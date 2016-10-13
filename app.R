@@ -18,7 +18,8 @@ ui <- dashboardPage(
   dashboardBody(
     tabItems(
       tabItem(tabName = "storage",
-        h2("/data/aryee"),      
+        h2(textOutput("heading")),    
+        h3(textOutput("timestamp")),
         fluidRow(
           box(title="Biggest directories", plotOutput("bigDirs", width=700, height = 600))
         )
@@ -53,6 +54,7 @@ server <- function(input, output) {
   # Drop top-level dir
   baseIdx <- which.min(str_count(x$dir, "/"))
   baseDir <- x[baseIdx,"dir"]
+  baseDirTB <- round(x[baseIdx, "sizeTB"], 1)
   x <- x[-baseIdx,]
   x$dir <- sub(paste0(baseDir, "/"), "", x$dir)
   x <- x[1:40,]
@@ -111,6 +113,9 @@ server <- function(input, output) {
   y <- rowMeans(cbind(c(0, cs[-length(cs)]), cs))
   pHistory <- p + annotate("text", x = max(topDat$date), y=y, label=topDirs, hjust=-0.1) + guides(fill=FALSE)
   
+  output$heading <- renderText({paste0(baseDir, "  (", baseDirTB, "TB)")})
+  
+  output$timestamp <- renderText({paste(as.character(max(dat$date)), "UTC")})
   
   output$bigDirs <- renderPlot({
     print(pBigDirs)
